@@ -17,56 +17,60 @@ public class My_Guess_game extends javax.swing.JFrame {
      * Creates new form My_Guess_game
      */
     String[] words = {"cup", "phone", "school", "apple", "air", "garden", 
-        "computer", "labtop", "notebook", "candy", "lunch", "happy", "home", "homework", "baseball"};
-    int index = -1;
+        "computer", "laptop", "notebook", "candy", "lunch", "happy", "home", "homework", "baseball", "crow"};
+    int index = -1;  // Initialize index to keep track of current word index
     
     public My_Guess_game() {
-        initComponents();
-        displayWord();
-        
+        initComponents(); // Initialize GUI components
+        displayWord();// Display the initial word
+        // Disable the Next button at the beginning
         jButton_Next.setEnabled(false);
 
     }
 
-    
+    // Method to display a word with some letters hidden
     public void displayWord()
     {
-        if(index == -1){
+        if(index == -1){ // If index is -1, it's the start of the game
             jLabel_Word.setText("--Word--");
             jTextField_Guess.setText("--Guess--");
         }
         else{
+            // Randomly select positions in the word to hide
             int pos1 = (int) (Math.random()* words[index].length());
             int pos2 = (int) (Math.random()* words[index].length());
             int pos3 = (int) (Math.random()* words[index].length());
             
             StringBuilder newtext = new StringBuilder(words[index]);
+            // Replace characters at selected positions with underscores
             newtext.setCharAt(pos1, '_');
             newtext.setCharAt(pos2, '_');
             newtext.setCharAt(pos3, '_');
             
-            jLabel_Word.setText(newtext.toString());
+            jLabel_Word.setText(newtext.toString());  // Set the word with hidden letters
         }
     }
     
-    
+    // Method to check the guessed word
     public void checkWord()
     {
+        // Check if guessed word matches the actual word
         if(jTextField_Guess.getText().equals(words[index]))
         {
-            jLabel_Result.setText("Correct");
-            jLabel_Result.setBackground(Color.green);
+            jLabel_Result.setText("Correct"); // Display Correct if the guess is right
+            jLabel_Result.setBackground(Color.green);  // Set background color to green
         }
         else{
-            jLabel_Result.setText("Wrong");
-            jLabel_Result.setBackground(Color.red);
+            jLabel_Result.setText("Wrong");  // Display Wrong if the guess is wrong
+            jLabel_Result.setBackground(Color.red);  // Set background color to red
         }
         if(index == words.length -1)
+             // If reached the end of the words array, disable Next button and enable Start button
         {
             jButton_Next.setEnabled(false);
             jButton_Start.setEnabled(true);
         }
-        jTextField_Guess.setText("");
+        jTextField_Guess.setText("");   // Clear the guess field for the next input
     }
     
     
@@ -238,12 +242,17 @@ public class My_Guess_game extends javax.swing.JFrame {
     }                                         
 
     private void jButton_StartActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        index = 0;
-        jTextField_Guess.setText("");
+        index = 0; // Reset the index to start from the first word in the array
+        jTextField_Guess.setText(""); // Clear the text field for the player's guess
+        // Enable the "Next" button to allow progression to the next word
         jButton_Next.setEnabled(true);
+        // Disable the "Start" button to prevent restarting the game while it's in progress
         jButton_Start.setEnabled(false);
+        // Set the initial text for the result label
         jLabel_Result.setText("Result");
+        // Set the background color of the result label to dark gray for styling
         jLabel_Result.setBackground(Color.darkGray);
+        // Display the first word with some letters hidden
         displayWord();
     }                                             
 
@@ -252,8 +261,8 @@ public class My_Guess_game extends javax.swing.JFrame {
         checkWord();
         if(index < words.length -1)
         {
-          index++;
-        displayWord();  
+          index++;  // Move to the next word index
+        displayWord();  // Display the next word with some letters hidden
         }
  
     }                                            
